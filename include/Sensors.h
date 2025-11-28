@@ -6,7 +6,7 @@
 #include <Arduino.h>
 
 #define NUM_SENSORS 3
-#define BLACK_VALUE 700
+#define BLACK_VALUE 830
 
 // pins -> sensors left to right
 const uint8_t frontSensors[NUM_SENSORS] = {A6, A12, A7};

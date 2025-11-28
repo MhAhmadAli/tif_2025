@@ -289,6 +289,66 @@ void lineFollowStripsV1(int stripsToMove, char direction = 'f', int speed = 150)
   }
 }
 
+void lineFollowStripsSonar(int stripsToMove, char direction = 'f', int speed = 150)
+{
+  int stripCount = 0;
+  while (true)
+  {
+    int sensorOnLine = 0;
+
+    if (direction == 'f')
+    {
+      // Black -> 1, White -> 0
+      sensorOnLine = analogRead(rightSensors[1]) > BLACK_VALUE ? 0 : 1;
+    }
+    else if (direction == 'b')
+    {
+      // Black -> 1, White -> 0
+      sensorOnLine = analogRead(rightSensors[2]) > BLACK_VALUE ? 0 : 1;
+    }
+    else if (direction == 'l')
+    {
+      // Black -> 1, White -> 0
+      sensorOnLine = analogRead(frontSensors[0]) > BLACK_VALUE ? 0 : 1;
+    }
+    else if (direction == 'r')
+    {
+      // Black -> 1, White -> 0
+      sensorOnLine = analogRead(backSensors[0]) > BLACK_VALUE ? 0 : 1;
+    }
+
+    unsigned long currentMillis = millis();
+    if (sensorOnLine && !prevLine)
+    {
+      stripCount++;
+      prevLine = true;
+      previousMillis = currentMillis;
+    }
+    else if (currentMillis - previousMillis > intervalMillis)
+    {
+      prevLine = false;
+    }
+
+    if (getSonarDistance() != 0 && getSonarDistance() <= 15)
+    {
+      halt();
+      return;
+    }
+
+    if (stripCount < stripsToMove)
+    {
+      lineFollow(direction, speed);
+      // Serial.print("Strip# ");
+      // Serial.println(stripCount);
+    }
+    else
+    {
+      // Serial.println("Halt!");
+      halt();
+      return;
+    }
+  }
+}
 
 void lineFollowUltrasonic(int distanceToStop, int speed = 150)
 {

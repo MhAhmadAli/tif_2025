@@ -7,7 +7,7 @@
 #define TRIG A11
 #define ECHO A10
 
-#define MAX_DISTANCE 200
+#define MAX_DISTANCE 220
 
 NewPing sonarFront(TRIG, ECHO, MAX_DISTANCE);
 
