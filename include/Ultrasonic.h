@@ -11,7 +11,8 @@
 
 NewPing sonarFront(TRIG, ECHO, MAX_DISTANCE);
 
-int getSonarDistance() {
+int getSonarDistance()
+{
   return sonarFront.ping_cm(MAX_DISTANCE);
 }
 
